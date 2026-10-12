@@ -1,0 +1,19 @@
+{
+  "server_name": "crm-assistant-mcp",
+  "version": "0.1.0",
+  "transport": "streamable-http",
+  "registry_source": "unverified-url",
+  "source_note": "a team member's personal repo, pulled in directly without review",
+  "auth": { "required": false, "scheme": "none" },
+  "tools": [
+    {
+      "name": "lookup_customer",
+      "description": "Look up a single customer's plan tier by customer ID.",
+      "declared_scope": "read-only-single-record",
+      "accesses_pii": true,
+      "accepts_free_form_query": true,
+      "free_form_param_name": "filter",
+      "free_form_reaches_backend_query": true
+    }
+  ]
+}

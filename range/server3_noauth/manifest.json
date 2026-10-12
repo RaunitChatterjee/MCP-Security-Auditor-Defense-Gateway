@@ -1,0 +1,33 @@
+{
+  "server_name": "ops-console-mcp",
+  "version": "0.1.0",
+  "transport": "streamable-http",
+  "registry_source": "verified-registry",
+  "source_note": "listed on a vetted internal MCP catalog, but auth was never wired up at deploy time",
+  "auth": { "required": false, "scheme": "none" },
+  "tools": [
+    {
+      "name": "get_user",
+      "description": "Look up a user's account record by user ID.",
+      "declared_scope": "read-only",
+      "accesses_pii": true,
+      "accepts_free_form_query": false
+    },
+    {
+      "name": "update_balance",
+      "description": "Update a user's account balance (e.g. after a support credit/refund).",
+      "declared_scope": "read-write",
+      "accesses_pii": true,
+      "can_target_privileged_accounts": true,
+      "accepts_free_form_query": false
+    },
+    {
+      "name": "list_users",
+      "description": "List all user accounts in the system.",
+      "declared_scope": "read-only",
+      "accesses_pii": true,
+      "returns_full_table": true,
+      "accepts_free_form_query": false
+    }
+  ]
+}

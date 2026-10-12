@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
+range/server1_cmdinj/sample_repo/
+range/server2_traversal/workspace/
+logs/*.jsonl
+reports/*.json
+dashboard/node_modules/
+dashboard/dist/
+.dev-logs/
+.dev-pids
+.DS_Store

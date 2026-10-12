@@ -1,0 +1,28 @@
+{
+  "server_name": "project-files-mcp",
+  "version": "0.1.0",
+  "transport": "streamable-http",
+  "registry_source": "local-dev",
+  "source_note": "written in-house for this agent's workspace access",
+  "auth": { "required": false, "scheme": "none" },
+  "tools": [
+    {
+      "name": "read_file",
+      "description": "Read a text file from the current project workspace, by relative path.",
+      "declared_scope": "read-only",
+      "filesystem_access": true,
+      "declared_sandbox_root": "workspace/",
+      "sandbox_enforced_in_code": false,
+      "accepts_free_form_query": false
+    },
+    {
+      "name": "list_files",
+      "description": "List files in the current project workspace.",
+      "declared_scope": "read-only",
+      "filesystem_access": true,
+      "declared_sandbox_root": "workspace/",
+      "sandbox_enforced_in_code": true,
+      "accepts_free_form_query": false
+    }
+  ]
+}

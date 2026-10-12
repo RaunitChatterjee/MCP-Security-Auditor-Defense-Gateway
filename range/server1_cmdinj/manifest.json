@@ -1,0 +1,26 @@
+{
+  "server_name": "git-helper-mcp",
+  "version": "0.1.0",
+  "transport": "streamable-http",
+  "registry_source": "unverified-url",
+  "source_note": "installed from a gist link shared in a Discord, never reviewed",
+  "auth": { "required": false, "scheme": "none" },
+  "tools": [
+    {
+      "name": "git_log",
+      "description": "Show git commit log, optionally filtered by author name.",
+      "declared_scope": "read-only",
+      "executes_subprocess": true,
+      "subprocess_shell": true,
+      "accepts_free_form_query": false
+    },
+    {
+      "name": "git_grep",
+      "description": "Search commit messages and diffs for a text pattern.",
+      "declared_scope": "read-only",
+      "executes_subprocess": true,
+      "subprocess_shell": true,
+      "accepts_free_form_query": true
+    }
+  ]
+}
