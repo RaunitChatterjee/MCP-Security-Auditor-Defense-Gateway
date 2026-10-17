@@ -57,8 +57,12 @@ tracker = SessionTracker()
 # only — tighten this before deploying the gateway anywhere public.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173",
-                   "http://localhost:4173", "http://127.0.0.1:4173"],
+    # Vite picks whatever port is free (5173, 5174, 5175, ...) when its
+    # default is already taken by another process — a hardcoded port list
+    # here breaks the moment that happens. Allow any localhost/127.0.0.1
+    # port instead, since this gateway is a local dev tool, not a public
+    # service with real cross-origin exposure to worry about.
+    allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
     expose_headers=["X-Gateway-Alert", "X-Gateway-Alert-Title"],
